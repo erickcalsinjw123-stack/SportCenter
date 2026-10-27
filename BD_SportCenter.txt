@@ -1,0 +1,153 @@
+DROP DATABASE IF EXISTS sportcenter;
+
+CREATE DATABASE sportcenter
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE sportcenter;
+
+SELECT VERSION();
+
+-- =====================================================
+-- 1. TABLA USUARIO
+-- =====================================================
+
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(100) NOT NULL,
+    rol VARCHAR(15) NOT NULL,
+    estado VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT chk_usuario_rol
+        CHECK (rol IN ('ADMIN', 'RECEPCIONISTA')),
+
+    CONSTRAINT chk_usuario_estado
+        CHECK (estado IN ('ACTIVO', 'INACTIVO'))
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- 2. TABLA CLIENTE
+-- =====================================================
+
+CREATE TABLE cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    telefono VARCHAR(9) NOT NULL UNIQUE,
+    email VARCHAR(254) NOT NULL,
+
+    CONSTRAINT chk_cliente_telefono
+        CHECK (telefono REGEXP '^[0-9]{9}$')
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- 3. TABLA CANCHA
+-- =====================================================
+
+CREATE TABLE cancha (
+    id_cancha INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL UNIQUE,
+    precio_hora DECIMAL(10,2) NOT NULL,
+    estado VARCHAR(15) NOT NULL DEFAULT 'DISPONIBLE',
+
+    CONSTRAINT chk_cancha_precio
+        CHECK (precio_hora > 0),
+
+    CONSTRAINT chk_cancha_estado
+        CHECK (estado IN ('DISPONIBLE', 'MANTENIMIENTO'))
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- 4. TABLA RESERVA
+-- =====================================================
+
+CREATE TABLE reserva (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_cancha INT NOT NULL,
+    id_usuario INT NOT NULL,
+    deporte VARCHAR(25) NOT NULL,
+    fecha_inicio DATETIME NOT NULL,
+    fecha_fin DATETIME NOT NULL,
+    precio_total DECIMAL(10,2) NOT NULL,
+    estado VARCHAR(15) NOT NULL DEFAULT 'CONFIRMADA',
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_reserva_cliente
+        FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+
+    CONSTRAINT fk_reserva_cancha
+        FOREIGN KEY (id_cancha) REFERENCES cancha(id_cancha),
+
+    CONSTRAINT fk_reserva_usuario
+        FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+
+    CONSTRAINT chk_reserva_fechas
+        CHECK (fecha_fin > fecha_inicio),
+
+    CONSTRAINT chk_reserva_precio
+        CHECK (precio_total >= 0),
+
+    CONSTRAINT chk_reserva_estado
+        CHECK (estado IN ('CONFIRMADA', 'CANCELADA')),
+
+    INDEX idx_reserva_cancha_fecha
+        (id_cancha, estado, fecha_inicio, fecha_fin),
+
+    INDEX idx_reserva_cliente (id_cliente),
+    INDEX idx_reserva_usuario (id_usuario)
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- 5. TABLA PAGO
+-- =====================================================
+
+CREATE TABLE pago (
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    id_reserva INT NOT NULL,
+    monto DECIMAL(10,2) NOT NULL,
+    fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    metodo VARCHAR(20) NOT NULL,
+    estado VARCHAR(15) NOT NULL DEFAULT 'COMPLETADO',
+
+    CONSTRAINT fk_pago_reserva
+        FOREIGN KEY (id_reserva) REFERENCES reserva(id_reserva),
+
+    CONSTRAINT chk_pago_monto
+        CHECK (monto > 0),
+
+    CONSTRAINT chk_pago_metodo
+        CHECK (metodo IN ('EFECTIVO', 'TARJETA', 'TRANSFERENCIA', 'YAPE', 'PLIN')),
+
+    CONSTRAINT chk_pago_estado
+        CHECK (estado IN ('COMPLETADO', 'RECHAZADO', 'REEMBOLSADO')),
+
+    INDEX idx_pago_reserva (id_reserva)
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- VERIFICAR
+-- =====================================================
+SHOW TABLES;
+
+SELECT * FROM usuario;
+SELECT * FROM cliente;
+SELECT * FROM cancha;
+SELECT * FROM reserva;
+SELECT * FROM pago;
+
+
+-- Elimina todos los pagos, reservas, clientes y canchas, y reinicia
+--  sus contadores de ID para que vuelvan a empezar desde 1
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE pago;
+TRUNCATE TABLE reserva;
+TRUNCATE TABLE cliente;
+TRUNCATE TABLE cancha;
+
+SET FOREIGN_KEY_CHECKS = 1;
