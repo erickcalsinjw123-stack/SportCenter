@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package dao;
+import modelo.Usuario;
+import java.sql.SQLException;
 
-/**
- *
- * @author Erick
- */
 public interface IUsuarioDAO {
-    
+
+    Usuario buscarPorNombre(String nombreUsuario) throws SQLException;
+    boolean existe(String nombreUsuario) throws SQLException;
+    void insertar(Usuario u) throws SQLException;
 }
