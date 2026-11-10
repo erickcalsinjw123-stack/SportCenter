@@ -1,0 +1,166 @@
+
+<div class="pagina">
+
+  <div class="encabezado">
+    <h1>Procesar pago</h1>
+    <p>Confirma el pago correspondiente a una reserva.</p>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="panel" *ngIf="!cargando && !comprobante">
+
+    <form (ngSubmit)="confirmar()">
+
+      <div class="campo">
+        <label>Pago pendiente</label>
+
+        <select
+          name="pagoSeleccionado"
+          [(ngModel)]="pagoSeleccionado"
+          (change)="seleccionarPago()"
+          required
+        >
+          <option [ngValue]="null">Seleccionar pago</option>
+
+          <option *ngFor="let pago of pagosPendientes" [ngValue]="pago">
+            Pago #{{ pago.idPago }} - Reserva #{{ pago.idReserva }} -
+            {{ pago.nombreCliente }}
+          </option>
+        </select>
+
+        <small *ngIf="pagosPendientes.length === 0">
+          No hay pagos pendientes por procesar.
+        </small>
+      </div>
+
+      <div class="resumen-pago" *ngIf="pagoSeleccionado">
+        <h3>Resumen del pago</h3>
+
+        <div class="dato">
+          <span>Código de pago</span>
+          <strong>#{{ pagoSeleccionado.idPago }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Reserva</span>
+          <strong>#{{ pagoSeleccionado.idReserva }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Cliente</span>
+          <strong>{{ pagoSeleccionado.nombreCliente }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Cancha</span>
+          <strong>{{ pagoSeleccionado.nombreCancha }}</strong>
+        </div>
+
+        <div class="monto">
+          <span>Total a pagar</span>
+          <strong>S/ {{ pagoSeleccionado.monto | number:'1.2-2' }}</strong>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Método de pago</label>
+
+        <select name="metodo" [(ngModel)]="metodo" required>
+          <option value="BCP">BCP</option>
+          <option value="YAPE">Yape</option>
+          <option value="PLIN">Plin</option>
+          <option value="INTERBANK">Interbank</option>
+          <option value="EFECTIVO">Efectivo</option>
+          <option value="TARJETA">Tarjeta</option>
+          <option value="BBVA">BBVA</option>
+          <option value="SCOTIABANK">Scotiabank</option>
+          <option value="OTRO">Otro</option>
+        </select>
+      </div>
+
+      <div class="campo" *ngIf="metodo === 'OTRO'">
+        <label>Especificar medio de pago</label>
+
+        <input
+          type="text"
+          name="otroMetodo"
+          [(ngModel)]="otroMetodo"
+          placeholder="Ej. Banco de la Nación"
+          maxlength="50"
+          required
+        >
+      </div>
+
+      <div class="mensaje" *ngIf="mensaje">
+        {{ mensaje }}
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="btn-volver" (click)="volver()">
+          Volver
+        </button>
+
+        <button
+          type="submit"
+          class="btn-guardar"
+          [disabled]="guardando || !pagoSeleccionado"
+        >
+          {{ guardando ? 'Procesando...' : 'Confirmar pago' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- CARGA -->
+  <div class="cargando" *ngIf="cargando">
+    Cargando pagos pendientes...
+  </div>
+
+  <!-- COMPROBANTE -->
+  <div class="panel comprobante" *ngIf="comprobante">
+
+    <div id="comprobante-imprimible">
+
+      <div class="comprobante-encabezado">
+        <h2>SPORTCENTER</h2>
+        <p>Comprobante de pago</p>
+        <span>Pago completado</span>
+      </div>
+
+      <div class="comprobante-detalle">
+
+        <p><strong>N.º de comprobante:</strong> {{ comprobante.idPago }}</p>
+        <p><strong>Reserva:</strong> #{{ comprobante.idReserva }}</p>
+        <p><strong>Cliente:</strong> {{ comprobante.nombreCliente }}</p>
+        <p><strong>Cancha:</strong> {{ comprobante.nombreCancha }}</p>
+        <p><strong>Fecha:</strong> {{ comprobante.fechaPago | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+        <p><strong>Método de pago:</strong> {{ comprobante.metodo }}</p>
+
+        <div class="comprobante-total">
+          <span>Total pagado</span>
+          <strong>S/ {{ comprobante.monto | number:'1.2-2' }}</strong>
+        </div>
+
+      </div>
+
+      <div class="comprobante-pie">
+        <p>Gracias por elegir SportCenter.</p>
+        <p>Conserve este comprobante.</p>
+      </div>
+
+    </div>
+
+    <div class="acciones acciones-comprobante">
+      <button type="button" class="btn-volver" (click)="volver()">
+        Volver a pagos
+      </button>
+
+      <button type="button" class="btn-guardar" (click)="imprimir()">
+        Imprimir comprobante
+      </button>
+    </div>
+
+  </div>
+
+</div>

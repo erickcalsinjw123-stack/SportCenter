@@ -1,0 +1,119 @@
+
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>{{ esEdicion ? 'Editar reserva' : 'Nueva reserva' }}</h1>
+      <p>Completa los datos para gestionar la reserva.</p>
+    </div>
+  </div>
+
+  <div class="panel" *ngIf="!cargando">
+
+    <form (ngSubmit)="guardar()">
+
+      <div class="form-grid">
+
+        <div class="campo">
+          <label>Cliente</label>
+          <select name="idCliente" [(ngModel)]="reserva.idCliente" required>
+            <option [ngValue]="0">Seleccionar cliente</option>
+            <option *ngFor="let cliente of clientes" [ngValue]="cliente.idCliente">
+              {{ cliente.nombre }} {{ cliente.apellido }}
+            </option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Cancha</label>
+          <select name="idCancha" [(ngModel)]="reserva.idCancha"
+            (change)="calcularPrecio()" required>
+            <option [ngValue]="0">Seleccionar cancha</option>
+            <option *ngFor="let cancha of canchas" [ngValue]="cancha.idCancha">
+              {{ cancha.nombre }} - S/ {{ cancha.precioHora }}/hora
+            </option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Deporte</label>
+          <select name="deporte" [(ngModel)]="reserva.deporte" required>
+            <option value="">Seleccionar deporte</option>
+            <option value="FUTBOL">Fútbol</option>
+            <option value="VOLEY">Vóley</option>
+            <option value="BASQUET">Básquet</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Fecha de reserva</label>
+          <input
+            type="date"
+            name="fecha"
+            [(ngModel)]="fechaReserva"
+            (change)="actualizarFechas()"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label>Hora de inicio</label>
+          <select
+            name="horaInicio"
+            [(ngModel)]="horaInicio"
+            (change)="actualizarFechas()"
+            required
+          >
+            <option value="">Seleccionar hora</option>
+            <option *ngFor="let hora of horasInicio" [value]="hora">
+              {{ hora }}
+            </option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Hora de fin</label>
+          <select
+            name="horaFin"
+            [(ngModel)]="horaFin"
+            (change)="actualizarFechas()"
+            required
+          >
+            <option value="">Seleccionar hora</option>
+            <option *ngFor="let hora of horasFin" [value]="hora">
+              {{ hora }}
+            </option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Precio total</label>
+          <div class="precio">
+            S/ {{ precioTotal | number:'1.2-2' }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mensaje" *ngIf="mensaje">
+        {{ mensaje }}
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="btn-volver" (click)="volver()">
+          Volver
+        </button>
+
+        <button type="submit" class="btn-guardar" [disabled]="guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar reserva' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="cargando" *ngIf="cargando">
+    Cargando información...
+  </div>
+
+</div>

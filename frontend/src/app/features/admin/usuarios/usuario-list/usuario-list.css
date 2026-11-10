@@ -1,0 +1,148 @@
+.pagina {
+  padding: 30px;
+  color: #26352c;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.encabezado p {
+  color: #78847b;
+  margin-top: 7px;
+}
+
+button {
+  border: none;
+  border-radius: 7px;
+  padding: 9px 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-nuevo {
+  background: #244c37;
+  color: white;
+  padding: 12px 17px;
+}
+
+.filtros {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 18px;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 11px;
+  border: 1px solid #dce3dd;
+  border-radius: 7px;
+  outline: none;
+}
+
+.filtros input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  background: white;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+th {
+  padding: 14px;
+  background: #f1f5f1;
+  text-align: left;
+  color: #46564b;
+  font-size: 13px;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 13px;
+}
+
+.estado {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.activo {
+  color: #267344;
+  background: #e2f4e8;
+}
+
+.inactivo {
+  color: #a33131;
+  background: #fde6e6;
+}
+
+.acciones {
+  display: flex;
+  gap: 7px;
+}
+
+.btn-editar {
+  background: #e8eef9;
+  color: #31558b;
+}
+
+.btn-desactivar {
+  background: #fde6e6;
+  color: #a33131;
+}
+
+.btn-activar {
+  background: #e2f4e8;
+  color: #267344;
+}
+
+.sin-resultados,
+.cargando {
+  padding: 25px;
+  text-align: center;
+  color: #78847b;
+}
+
+.mensaje {
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #edf5ee;
+  color: #244c37;
+  border-radius: 7px;
+}
+
+@media (max-width: 700px) {
+  .pagina {
+    padding: 15px;
+  }
+
+  .encabezado {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+}

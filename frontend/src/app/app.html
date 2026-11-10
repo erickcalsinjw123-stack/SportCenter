@@ -1,0 +1,59 @@
+
+<div class="layout" *ngIf="mostrarMenu; else sinMenu">
+
+  <aside class="sidebar">
+
+    <div class="marca">
+      <div class="logo">SC</div>
+      <span>SportCenter</span>
+    </div>
+
+    <p class="menu-titulo">MENÚ PRINCIPAL</p>
+
+    <nav *ngIf="esAdmin">
+      <a routerLink="/admin/dashboard" routerLinkActive="activo">
+        <span>▦</span> Dashboard
+      </a>
+
+      <a routerLink="/admin/canchas" routerLinkActive="activo">
+        <span>▣</span> Gestión de canchas
+      </a>
+
+      <a routerLink="/admin/usuarios" routerLinkActive="activo">
+        <span>♙</span> Gestión de usuarios
+      </a>
+
+      <a routerLink="/admin/reportes" routerLinkActive="activo">
+        <span>▤</span> Reportes
+      </a>
+    </nav>
+
+    <nav *ngIf="!esAdmin">
+      <a routerLink="/recepcion/clientes" routerLinkActive="activo">
+        <span>♙</span> Clientes
+      </a>
+
+      <a routerLink="/recepcion/reservas" routerLinkActive="activo">
+        <span>▣</span> Reservas
+      </a>
+
+      <a routerLink="/recepcion/pagos" routerLinkActive="activo">
+        <span>▤</span> Pagos
+      </a>
+    </nav>
+
+    <button class="cerrar-sesion" (click)="cerrarSesion()">
+      Cerrar sesión
+    </button>
+
+  </aside>
+
+  <main class="contenido">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
+
+<ng-template #sinMenu>
+  <router-outlet></router-outlet>
+</ng-template>

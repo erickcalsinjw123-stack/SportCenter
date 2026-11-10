@@ -1,0 +1,57 @@
+<div class="clientes-container">
+  <div class="encabezado">
+    <div>
+      <h1>Gestión de Clientes</h1>
+      <p>Administra los clientes registrados en SportCenter.</p>
+    </div>
+
+    <button class="btn-agregar" (click)="agregar()">
+      + Nuevo cliente
+    </button>
+  </div>
+
+  <div class="barra-busqueda">
+    <input
+      type="text"
+      placeholder="Buscar por nombre, teléfono o correo..."
+      [(ngModel)]="busqueda"
+      (ngModelChange)="filtrar()"
+    >
+  </div>
+
+  <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
+  <p *ngIf="cargando">Cargando clientes...</p>
+
+  <div class="tabla-container" *ngIf="!cargando">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Teléfono</th>
+          <th>Correo electrónico</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let cliente of clientesFiltrados">
+          <td>{{ cliente.idCliente }}</td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>{{ cliente.email }}</td>
+          <td class="acciones">
+            <button (click)="modificar(cliente)">Editar</button>
+            <button class="btn-eliminar" (click)="eliminar(cliente)">Eliminar</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="clientesFiltrados.length === 0">
+          <td colspan="6">No se encontraron clientes.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

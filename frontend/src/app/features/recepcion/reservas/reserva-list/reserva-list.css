@@ -1,0 +1,203 @@
+.pagina {
+  padding: 30px;
+  color: #26352c;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.encabezado p {
+  color: #78847b;
+  margin-top: 7px;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 7px;
+  padding: 10px 15px;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-principal {
+  background: #244c37;
+  color: white;
+}
+
+.btn-principal:hover {
+  background: #193b2a;
+}
+
+.panel {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filtros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 11px 13px;
+  border: 1px solid #dce3dd;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+}
+
+.filtros input {
+  flex: 1;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  border-color: #376c4c;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1050px;
+}
+
+thead {
+  background: #f1f5f1;
+}
+
+th {
+  color: #46564b;
+  font-size: 13px;
+  text-align: left;
+  padding: 14px 12px;
+}
+
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 13px;
+}
+
+tbody tr:hover {
+  background: #fafcf9;
+}
+
+.estado {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.confirmada {
+  background: #e2f3e7;
+  color: #267443;
+}
+
+.cancelada {
+  background: #fde8e7;
+  color: #b43c35;
+}
+
+.acciones {
+  display: flex;
+  gap: 7px;
+}
+
+.btn-editar {
+  background: #fff2c9;
+  color: #84620a;
+}
+
+.btn-cancelar {
+  background: #fce7e5;
+  color: #ad3932;
+}
+
+.sin-resultados,
+.cargando {
+  text-align: center;
+  padding: 30px;
+  color: #7b867d;
+}
+
+.mensaje {
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #edf5ee;
+  color: #315e3c;
+  border-radius: 7px;
+}
+
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 420px;
+  max-width: 90%;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: #263d2d;
+}
+
+.modal p {
+  color: #66736a;
+  line-height: 1.5;
+}
+
+.detalle {
+  font-size: 13px;
+}
+
+.modal-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn-volver {
+  background: #e9eee9;
+  color: #34473a;
+}
+
+.btn-confirmar {
+  background: #b83e36;
+  color: white;
+}

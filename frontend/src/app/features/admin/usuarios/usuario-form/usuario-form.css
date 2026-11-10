@@ -1,0 +1,170 @@
+.pagina {
+  padding: 30px;
+  color: #26352c;
+}
+
+.encabezado {
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.encabezado p {
+  color: #78847b;
+  margin-top: 7px;
+}
+
+form {
+  max-width: 850px;
+  background: white;
+  padding: 28px;
+  border-radius: 10px;
+}
+
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.campo-completo {
+  grid-column: 1 / -1;
+}
+
+.campo label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #344b3b;
+}
+
+.campo label span {
+  color: #78847b;
+  font-weight: 400;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #dce3dd;
+  border-radius: 7px;
+  outline: none;
+  font-size: 13px;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: #477b58;
+}
+
+.contrasena {
+  display: flex;
+  gap: 8px;
+}
+
+.contrasena input {
+  flex: 1;
+}
+
+.btn-mostrar {
+  padding: 0 13px;
+  border: none;
+  border-radius: 7px;
+  background: #edf5ee;
+  color: #244c37;
+  cursor: pointer;
+}
+
+.requisitos {
+  padding: 13px;
+  background: #f6f8f6;
+  border-radius: 7px;
+  color: #59675d;
+  font-size: 12px;
+}
+
+.requisitos p {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.requisitos ul {
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+.requisitos small {
+  color: #78847b;
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.botones button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  background: #edf0ed;
+  color: #46564b;
+}
+
+.btn-guardar {
+  background: #244c37;
+  color: white;
+}
+
+.btn-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensaje {
+  margin-top: 20px;
+  padding: 12px;
+  background: #fff0ed;
+  color: #a33131;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.cargando {
+  padding: 25px;
+  color: #78847b;
+}
+
+@media (max-width: 650px) {
+  .pagina {
+    padding: 15px;
+  }
+
+  form {
+    padding: 18px;
+  }
+
+  .formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-completo {
+    grid-column: auto;
+  }
+}

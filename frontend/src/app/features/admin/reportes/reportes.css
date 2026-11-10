@@ -1,0 +1,160 @@
+.pagina {
+  padding: 30px;
+  color: #26352c;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.encabezado p {
+  color: #78847b;
+  margin-top: 7px;
+}
+
+button {
+  border: none;
+  border-radius: 7px;
+  padding: 11px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-actualizar {
+  background: #244c37;
+  color: white;
+}
+
+.filtros {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: white;
+  border-radius: 10px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.campo input {
+  padding: 10px;
+  border: 1px solid #dce3dd;
+  border-radius: 7px;
+}
+
+.btn-limpiar {
+  background: #e9eee9;
+  color: #34473a;
+}
+
+h2 {
+  margin: 25px 0 15px;
+  font-size: 18px;
+  color: #344b3b;
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 23px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.tarjeta span {
+  color: #78847b;
+  font-size: 14px;
+}
+
+.tarjeta strong {
+  color: #244c37;
+  font-size: 26px;
+}
+
+.destacado {
+  background: #edf5ee;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  background: white;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th {
+  padding: 14px;
+  background: #f1f5f1;
+  text-align: left;
+  font-size: 13px;
+  color: #46564b;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 13px;
+}
+
+.sin-resultados,
+.cargando {
+  text-align: center;
+  padding: 25px;
+  color: #78847b;
+}
+
+.mensaje {
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #fff2c9;
+  color: #84620a;
+  border-radius: 7px;
+}
+
+@media (max-width: 750px) {
+  .pagina {
+    padding: 15px;
+  }
+
+  .encabezado {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .estadisticas {
+    grid-template-columns: 1fr;
+  }
+}

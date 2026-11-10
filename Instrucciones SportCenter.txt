@@ -1,0 +1,26 @@
+**Comando para levantar back-end**
+
+cd backend
+
+.\\mvnw.cmd spring-boot:run
+
+
+
+**Comando para levantar front-end**
+
+cd frontend
+
+ng serve -o
+
+
+
+**Comando para limpiar y compilar (ES RECOMENDABLE EJECUTAR ELLO EN EL BACKEND CUANDO SE HAGA UN CAMBIO)**
+
+.\\mvnw.cmd clean compile
+
+
+
+**Volver a levantar el back-end**
+
+.\\mvnw.cmd spring-boot:run
+

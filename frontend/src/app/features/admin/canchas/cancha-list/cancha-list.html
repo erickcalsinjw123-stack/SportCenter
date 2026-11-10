@@ -1,0 +1,213 @@
+<div class="main-content">
+
+  <header class="topbar">
+    <div>
+      <span class="breadcrumb">Administración / Canchas</span>
+      <h1>Gestión de Canchas</h1>
+      <p>Administra los espacios deportivos de tu complejo.</p>
+    </div>
+
+    <div class="user-info">
+      <div class="user-avatar">A</div>
+      <div>
+        <strong>Administrador</strong>
+        <small>Sport Center</small>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-card">
+
+    <div class="section-header">
+      <div>
+        <h2>Listado de canchas</h2>
+        <p>Consulta, registra y administra tus canchas.</p>
+      </div>
+
+      <button class="btn btn-add" (click)="agregar()">
+        <span>＋</span> Agregar cancha
+      </button>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <span>⌕</span>
+        <input
+          type="text"
+          placeholder="Buscar cancha..."
+          [(ngModel)]="busqueda"
+          (input)="filtrar()">
+      </div>
+
+      <button class="btn-refresh" (click)="cargar()" [disabled]="cargando">
+        ↻ Actualizar
+      </button>
+    </div>
+
+    <div class="message error" *ngIf="mensaje">
+      {{ mensaje }}
+    </div>
+
+    <div class="loading" *ngIf="cargando">
+      Cargando canchas...
+    </div>
+
+    <div class="table-container" *ngIf="!cargando">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE DE CANCHA</th>
+            <th>TARIFA / HORA</th>
+            <th>ESTADO</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let cancha of canchasFiltradas">
+            <td class="id-cell">{{ cancha.idCancha }}</td>
+
+            <td class="name-cell">{{ cancha.nombre }}</td>
+
+            <td class="price-cell">
+              S/ {{ cancha.precioHora | number:'1.2-2' }}
+            </td>
+
+            <td>
+              <span
+                class="status"
+                [class.available]="cancha.estado === 'DISPONIBLE'"
+                [class.maintenance]="cancha.estado === 'MANTENIMIENTO'">
+                {{ cancha.estado === 'DISPONIBLE' ? 'Disponible' : 'Mantenimiento' }}
+              </span>
+            </td>
+
+            <td>
+              <div class="actions">
+                <button
+                  class="action-btn view"
+                  title="Consultar"
+                  (click)="consultar(cancha)">
+                  Ver
+                </button>
+
+                <button
+                  class="action-btn edit"
+                  title="Modificar"
+                  (click)="modificar(cancha)">
+                  Editar
+                </button>
+
+                <button
+                  class="action-btn delete"
+                  title="Eliminar"
+                  (click)="abrirModalEliminar(cancha)">
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="canchasFiltradas.length === 0">
+            <td colspan="5" class="empty">
+              No se encontraron canchas.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      Total de canchas:
+      <strong>{{ canchasFiltradas.length }}</strong>
+    </div>
+
+  </section>
+</div>
+
+<!-- MODAL DE ELIMINACIÓN -->
+<div
+  class="modal-overlay"
+  *ngIf="mostrarModalEliminar"
+  (click)="cerrarModalEliminar()">
+
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-title"
+    (click)="$event.stopPropagation()">
+
+    <div class="warning-icon">!</div>
+
+    <h2 id="delete-title">Eliminar cancha</h2>
+
+    <p>
+      ¿Está seguro de eliminar la cancha
+      <strong>{{ canchaSeleccionada?.nombre }}</strong>?
+    </p>
+
+    <span class="warning-text">
+      Esta acción no se puede deshacer.
+    </span>
+
+    <div class="modal-actions">
+      <button
+        class="btn-cancel"
+        [disabled]="eliminando"
+        (click)="cerrarModalEliminar()">
+        Cancelar
+      </button>
+
+      <button
+        class="btn-confirm"
+        [disabled]="eliminando"
+        (click)="confirmarEliminacion()">
+        {{ eliminando ? 'Eliminando...' : 'Eliminar' }}
+      </button>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL DE CONSULTA -->
+<div
+  class="modal-overlay"
+  *ngIf="mostrarModalConsulta"
+  (click)="cerrarConsulta()">
+
+  <section
+    class="modal detail-modal"
+    role="dialog"
+    aria-modal="true"
+    (click)="$event.stopPropagation()">
+
+    <div class="detail-icon">▣</div>
+
+    <h2>Detalle de cancha</h2>
+
+    <div class="detail-row">
+      <span>ID</span>
+      <strong>{{ canchaConsultada?.idCancha }}</strong>
+    </div>
+
+    <div class="detail-row">
+      <span>Nombre</span>
+      <strong>{{ canchaConsultada?.nombre }}</strong>
+    </div>
+
+    <div class="detail-row">
+      <span>Precio por hora</span>
+      <strong>S/ {{ canchaConsultada?.precioHora | number:'1.2-2' }}</strong>
+    </div>
+
+    <div class="detail-row">
+      <span>Estado</span>
+      <strong>{{ canchaConsultada?.estado }}</strong>
+    </div>
+
+    <button class="btn-confirm close-detail" (click)="cerrarConsulta()">
+      Cerrar
+    </button>
+  </section>
+</div>

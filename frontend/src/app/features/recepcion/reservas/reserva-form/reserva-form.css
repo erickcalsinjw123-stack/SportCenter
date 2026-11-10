@@ -1,0 +1,137 @@
+.pagina {
+  padding: 30px;
+  color: #26352c;
+}
+
+.encabezado {
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.encabezado p {
+  color: #78847b;
+  margin-top: 7px;
+}
+
+.panel {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  max-width: 950px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #405247;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce3dd;
+  border-radius: 7px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  box-sizing: border-box;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: #376c4c;
+}
+
+.precio {
+  padding: 12px;
+  border-radius: 7px;
+  background: #edf5ee;
+  color: #28583a;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-volver {
+  background: #e9eee9;
+  color: #34473a;
+}
+
+.btn-guardar {
+  background: #244c37;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background: #193b2a;
+}
+
+.mensaje {
+  margin-top: 20px;
+  padding: 12px;
+  background: #fdebea;
+  color: #a53b34;
+  border-radius: 7px;
+}
+
+.cargando {
+  padding: 30px;
+  text-align: center;
+  color: #78847b;
+}
+
+@media (max-width: 650px) {
+  .pagina {
+    padding: 15px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .acciones {
+    flex-direction: column-reverse;
+  }
+
+  .acciones button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,118 @@
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>Gestión de usuarios</h1>
+      <p>Administra las cuentas y los permisos del sistema.</p>
+    </div>
+
+    <button class="btn-nuevo" (click)="nuevo()">
+      + Nuevo usuario
+    </button>
+  </div>
+
+  <div class="filtros">
+
+    <input
+      type="text"
+      placeholder="Buscar por nombre de usuario..."
+      [(ngModel)]="busqueda"
+      (input)="filtrar()"
+    >
+
+    <select [(ngModel)]="filtroRol" (change)="filtrar()">
+      <option value="">Todos los roles</option>
+      <option value="ADMIN">Administrador</option>
+      <option value="RECEPCIONISTA">Recepcionista</option>
+    </select>
+
+    <select [(ngModel)]="filtroEstado" (change)="filtrar()">
+      <option value="">Todos los estados</option>
+      <option value="ACTIVO">Activo</option>
+      <option value="INACTIVO">Inactivo</option>
+    </select>
+
+  </div>
+
+  <div class="mensaje" *ngIf="mensaje">
+    {{ mensaje }}
+  </div>
+
+  <div class="cargando" *ngIf="cargando">
+    Cargando usuarios...
+  </div>
+
+  <div class="tabla-contenedor" *ngIf="!cargando">
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre de usuario</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Fecha de creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let usuario of usuariosFiltrados">
+
+          <td>#{{ usuario.idUsuario }}</td>
+
+          <td>{{ usuario.nombreUsuario }}</td>
+
+          <td>
+            {{ usuario.rol === 'ADMIN' ? 'Administrador' : 'Recepcionista' }}
+          </td>
+
+          <td>
+            <span
+              class="estado"
+              [class.activo]="usuario.estado === 'ACTIVO'"
+              [class.inactivo]="usuario.estado === 'INACTIVO'"
+            >
+              {{ usuario.estado }}
+            </span>
+          </td>
+
+          <td>
+            {{ usuario.fechaCreacion | date:'dd/MM/yyyy' }}
+          </td>
+
+          <td>
+            <div class="acciones">
+
+              <button
+                class="btn-editar"
+                (click)="editar(usuario)"
+              >
+                Editar
+              </button>
+
+              <button
+                class="btn-eliminar"
+                (click)="eliminar(usuario)"
+              >
+                Eliminar
+              </button>
+
+            </div>
+          </td>
+
+        </tr>
+
+        <tr *ngIf="usuariosFiltrados.length === 0">
+          <td colspan="6" class="sin-resultados">
+            No se encontraron usuarios.
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

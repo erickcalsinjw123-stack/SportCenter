@@ -1,0 +1,121 @@
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>{{ modoEdicion ? 'Editar usuario' : 'Registrar usuario' }}</h1>
+      <p>
+        {{ modoEdicion
+          ? 'Modifica la información de la cuenta.'
+          : 'Completa los datos para crear una nueva cuenta.' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="cargando" *ngIf="cargando">
+    Cargando información...
+  </div>
+
+  <form *ngIf="!cargando" (ngSubmit)="guardar()">
+
+    <div class="formulario">
+
+      <div class="campo">
+        <label>Nombre de usuario</label>
+        <input
+          type="text"
+          name="nombreUsuario"
+          [(ngModel)]="usuario.nombreUsuario"
+          placeholder="Ejemplo: recepcion01"
+          maxlength="50"
+          required
+        >
+      </div>
+
+      <div class="campo">
+        <label>Rol del usuario</label>
+        <select
+          name="rol"
+          [(ngModel)]="usuario.rol"
+          required
+        >
+          <option value="ADMIN">Administrador</option>
+          <option value="RECEPCIONISTA">Recepcionista</option>
+        </select>
+      </div>
+
+      <div class="campo campo-completo">
+        <label>
+          Contraseña
+          <span *ngIf="modoEdicion">(Opcional)</span>
+        </label>
+
+        <div class="contrasena">
+          <input
+            [type]="mostrarContrasena ? 'text' : 'password'"
+            name="contrasena"
+            [(ngModel)]="usuario.contrasena"
+            placeholder="Ingresa una contraseña"
+          >
+
+          <button
+            type="button"
+            class="btn-mostrar"
+            (click)="mostrarContrasena = !mostrarContrasena"
+          >
+            {{ mostrarContrasena ? 'Ocultar' : 'Mostrar' }}
+          </button>
+        </div>
+
+        <div class="requisitos">
+          <p>La contraseña debe contener:</p>
+          <ul>
+            <li>Mínimo 8 caracteres.</li>
+            <li>Una letra mayúscula.</li>
+            <li>Una letra minúscula.</li>
+            <li>Un número.</li>
+            <li>Un carácter especial.</li>
+          </ul>
+          <small *ngIf="modoEdicion">
+            Si no deseas cambiar la contraseña, deja este campo vacío.
+          </small>
+        </div>
+      </div>
+
+      <div class="campo" *ngIf="modoEdicion">
+        <label>Estado de la cuenta</label>
+        <select
+          name="estado"
+          [(ngModel)]="usuario.estado"
+        >
+          <option value="ACTIVO">Activo</option>
+          <option value="INACTIVO">Inactivo</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="mensaje" *ngIf="mensaje">
+      {{ mensaje }}
+    </div>
+
+    <div class="botones">
+      <button
+        type="button"
+        class="btn-cancelar"
+        (click)="volver()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        class="btn-guardar"
+        [disabled]="guardando"
+      >
+        {{ guardando ? 'Guardando...' : 'Guardar usuario' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

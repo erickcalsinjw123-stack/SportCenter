@@ -1,0 +1,154 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f3f6f3;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #17251b;
+}
+
+.form-layout {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 35px 25px;
+}
+
+.form-header {
+  margin-bottom: 25px;
+}
+
+.back-link {
+  color: #176327;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.form-header h1 {
+  margin: 16px 0 7px;
+  font-size: 27px;
+}
+
+.form-header p,
+.form-card-title p {
+  color: #7a897e;
+  font-size: 13px;
+}
+
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(20, 50, 30, .06);
+}
+
+.form-card-title {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #edf1ed;
+}
+
+.form-card-title h2 {
+  font-size: 19px;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce5dd;
+  border-radius: 6px;
+  background: white;
+  outline: none;
+  font-size: 13px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #176327;
+  box-shadow: 0 0 0 3px rgba(23, 99, 39, .1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #edf1ed;
+}
+
+.btn-cancel,
+.btn-save {
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-cancel {
+  border: 1px solid #dce5dd;
+  color: #344238;
+  background: white;
+}
+
+.btn-save {
+  border: 0;
+  background: #176327;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #105522;
+}
+
+.btn-save:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.alert-error {
+  padding: 12px;
+  margin-bottom: 20px;
+  color: #a32121;
+  background: #fff0f0;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.loading {
+  padding: 15px;
+  color: #718076;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .form-layout {
+    padding: 20px 12px;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    text-align: center;
+  }
+}

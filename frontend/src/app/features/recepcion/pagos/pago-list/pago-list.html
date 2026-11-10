@@ -1,0 +1,118 @@
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>Gestión de pagos</h1>
+      <p>Consulta y administra los pagos de las reservas.</p>
+    </div>
+
+    <button class="btn-principal" (click)="procesarPago()">
+      + Procesar pago
+    </button>
+  </div>
+
+  <div class="panel">
+
+    <div class="filtros">
+      <input
+        type="text"
+        placeholder="Buscar por código, reserva, cliente o cancha..."
+        [(ngModel)]="busqueda"
+        (input)="filtrar()"
+      >
+
+      <select
+        [(ngModel)]="filtroEstado"
+        (change)="filtrar()"
+      >
+        <option value="">Todos los estados</option>
+        <option value="PENDIENTE">Pendientes</option>
+        <option value="COMPLETADO">Completados</option>
+        <option value="CANCELADO">Cancelados</option>
+        <option value="RECHAZADO">Rechazados</option>
+        <option value="REEMBOLSADO">Reembolsados</option>
+      </select>
+    </div>
+
+    <div class="mensaje" *ngIf="mensaje">
+      {{ mensaje }}
+    </div>
+
+    <div class="cargando" *ngIf="cargando">
+      Cargando pagos...
+    </div>
+
+    <div class="tabla-contenedor" *ngIf="!cargando">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Reserva</th>
+            <th>Cliente</th>
+            <th>Cancha</th>
+            <th>Monto</th>
+            <th>Fecha de pago</th>
+            <th>Método</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let pago of pagosFiltrados">
+
+            <td>#{{ pago.idPago }}</td>
+
+            <td>#{{ pago.idReserva }}</td>
+
+            <td>{{ pago.nombreCliente }}</td>
+
+            <td>{{ pago.nombreCancha }}</td>
+
+            <td>
+              S/ {{ pago.monto | number:'1.2-2' }}
+            </td>
+
+            <td>
+              <ng-container *ngIf="pago.fechaPago; else sinFecha">
+                {{ pago.fechaPago | date:'dd/MM/yyyy HH:mm' }}
+              </ng-container>
+
+              <ng-template #sinFecha>
+                <span>Sin registrar</span>
+              </ng-template>
+            </td>
+
+            <td>
+              {{ pago.metodo || 'Por definir' }}
+            </td>
+
+            <td>
+              <span
+                class="estado"
+                [class.pendiente]="pago.estado === 'PENDIENTE'"
+                [class.completado]="pago.estado === 'COMPLETADO'"
+                [class.rechazado]="pago.estado === 'RECHAZADO'"
+                [class.reembolsado]="pago.estado === 'REEMBOLSADO'"
+                [class.cancelado]="pago.estado === 'CANCELADO'"
+              >
+                {{ pago.estado }}
+              </span>
+            </td>
+
+          </tr>
+
+          <tr *ngIf="pagosFiltrados.length === 0">
+            <td colspan="8" class="sin-resultados">
+              No se encontraron pagos.
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>

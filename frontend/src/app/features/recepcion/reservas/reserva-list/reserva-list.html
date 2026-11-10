@@ -1,0 +1,146 @@
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>Gestión de reservas</h1>
+      <p>Administra las reservas de las canchas.</p>
+    </div>
+
+    <button class="btn-principal" (click)="agregar()">
+      + Nueva reserva
+    </button>
+  </div>
+
+  <div class="panel">
+
+    <div class="filtros">
+      <input
+        type="text"
+        placeholder="Buscar por cliente, cancha, deporte o código..."
+        [(ngModel)]="busqueda"
+        (input)="filtrar()"
+      >
+
+      <select [(ngModel)]="filtroEstado" (change)="filtrar()">
+        <option value="">Todos los estados</option>
+        <option value="CONFIRMADA">Confirmadas</option>
+        <option value="CANCELADA">Canceladas</option>
+      </select>
+    </div>
+
+    <div class="mensaje" *ngIf="mensaje">
+      {{ mensaje }}
+    </div>
+
+    <div class="cargando" *ngIf="cargando">
+      Cargando reservas...
+    </div>
+
+    <div class="tabla-contenedor" *ngIf="!cargando">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Cancha</th>
+            <th>Deporte</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let reserva of reservasFiltradas">
+            <td>#{{ reserva.idReserva }}</td>
+
+            <td>{{ reserva.nombreCliente }}</td>
+
+            <td>{{ reserva.nombreCancha }}</td>
+
+            <td>{{ reserva.deporte }}</td>
+
+            <td>{{ reserva.fechaInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+
+            <td>{{ reserva.fechaFin | date:'dd/MM/yyyy HH:mm' }}</td>
+
+            <td>S/ {{ reserva.precioTotal | number:'1.2-2' }}</td>
+
+            <td>
+              <span
+                class="estado"
+                [class.confirmada]="reserva.estado === 'CONFIRMADA'"
+                [class.cancelada]="reserva.estado === 'CANCELADA'"
+              >
+                {{ reserva.estado }}
+              </span>
+            </td>
+
+            <td class="acciones">
+              <button
+                class="btn-editar"
+                (click)="modificar(reserva)"
+                [disabled]="reserva.estado === 'CANCELADA'"
+              >
+                Editar
+              </button>
+
+              <button
+                class="btn-cancelar"
+                (click)="abrirModalCancelar(reserva)"
+                [disabled]="reserva.estado === 'CANCELADA'"
+              >
+                Cancelar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="reservasFiltradas.length === 0">
+            <td colspan="9" class="sin-resultados">
+              No se encontraron reservas.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal de cancelación -->
+<div class="modal-fondo" *ngIf="mostrarModalCancelar">
+  <div class="modal">
+
+    <h2>Cancelar reserva</h2>
+
+    <p>
+      ¿Estás seguro de cancelar la reserva
+      <strong>#{{ reservaSeleccionada?.idReserva }}</strong>?
+    </p>
+
+    <p class="detalle">
+      Cliente: {{ reservaSeleccionada?.nombreCliente }}
+    </p>
+
+    <div class="modal-acciones">
+      <button
+        class="btn-volver"
+        (click)="cerrarModalCancelar()"
+        [disabled]="cancelando"
+      >
+        Volver
+      </button>
+
+      <button
+        class="btn-confirmar"
+        (click)="confirmarCancelacion()"
+        [disabled]="cancelando"
+      >
+        {{ cancelando ? 'Cancelando...' : 'Confirmar cancelación' }}
+      </button>
+    </div>
+
+  </div>
+</div>

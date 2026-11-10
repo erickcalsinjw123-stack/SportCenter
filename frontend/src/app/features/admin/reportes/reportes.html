@@ -1,0 +1,158 @@
+<div class="pagina">
+
+  <div class="encabezado">
+    <div>
+      <h1>Reportes y estadísticas</h1>
+      <p>Consulta el rendimiento y los movimientos del SportCenter.</p>
+    </div>
+
+    <button class="btn-actualizar" (click)="cargarReportes()">
+      Actualizar información
+    </button>
+  </div>
+
+  <div class="filtros">
+
+    <div class="campo">
+      <label>Fecha inicial</label>
+      <input
+        type="date"
+        [(ngModel)]="fechaInicio"
+        (change)="filtrar()"
+      >
+    </div>
+
+    <div class="campo">
+      <label>Fecha final</label>
+      <input
+        type="date"
+        [(ngModel)]="fechaFin"
+        (change)="filtrar()"
+      >
+    </div>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">
+      Limpiar filtros
+    </button>
+
+  </div>
+
+  <div class="mensaje" *ngIf="mensaje">
+    {{ mensaje }}
+  </div>
+
+  <div class="cargando" *ngIf="cargando">
+    Cargando estadísticas...
+  </div>
+
+  <ng-container *ngIf="!cargando">
+
+    <h2>Resumen de reservas</h2>
+
+    <div class="estadisticas">
+
+      <div class="tarjeta">
+        <span>Total de reservas</span>
+        <strong>{{ totalReservas }}</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Confirmadas</span>
+        <strong>{{ reservasConfirmadas }}</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Canceladas</span>
+        <strong>{{ reservasCanceladas }}</strong>
+      </div>
+
+    </div>
+
+    <h2>Resumen financiero</h2>
+
+    <div class="estadisticas">
+
+      <div class="tarjeta destacado">
+        <span>Ingresos registrados</span>
+        <strong>S/ {{ ingresosTotales | number:'1.2-2' }}</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Total de pagos</span>
+        <strong>{{ totalPagos }}</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Pagos completados</span>
+        <strong>{{ pagosCompletados }}</strong>
+      </div>
+
+    </div>
+
+    <h2>Estado de los pagos</h2>
+
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Completados</td>
+            <td>{{ pagosCompletados }}</td>
+          </tr>
+
+          <tr>
+            <td>Rechazados</td>
+            <td>{{ pagosRechazados }}</td>
+          </tr>
+
+          <tr>
+            <td>Reembolsados</td>
+            <td>{{ pagosReembolsados }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Reservas recientes</h2>
+
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Cancha</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let reserva of obtenerReservasFiltradas().slice(0, 10)">
+            <td>#{{ reserva.idReserva }}</td>
+            <td>{{ reserva.nombreCliente }}</td>
+            <td>{{ reserva.nombreCancha }}</td>
+            <td>{{ reserva.fechaInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>S/ {{ reserva.precioTotal | number:'1.2-2' }}</td>
+            <td>{{ reserva.estado }}</td>
+          </tr>
+
+          <tr *ngIf="obtenerReservasFiltradas().length === 0">
+            <td colspan="6" class="sin-resultados">
+              No hay reservas para el periodo seleccionado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </ng-container>
+
+</div>
